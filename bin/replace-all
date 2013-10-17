@@ -1,3 +1,12 @@
 #!/bin/bash
 
+cat $1 | while read line; do
+  filename=${line%%:*}
+  linenum=${line#*:}
+  linenum=${linenum%%:*}
+  line=${line##*:}
+
+  sed -e "${linenum}s/.*/$line/" -i .replace-backup "$filename"
+done
+
 

@@ -1,0 +1,25 @@
+#!/bin/bash
+
+ROOT=`dirname ${BASH_SOURCE[0]-$0}`
+ROOT=`cd $ROOT/.. && pwd`
+
+main() {
+  cd $ROOT
+  rm -rf test/actual
+  cp -R test/original test/actual
+
+  cd test/actual
+  ../../bin/replace-all ../test.replace-all
+  cd ..
+  diff -r expected actual
+
+  if [ $? -eq 0 ]; then
+    echo "SUCCESS!"
+  else
+    echo "FAILED!"
+    exit $?
+  fi
+}
+
+main
+
