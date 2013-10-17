@@ -1,10 +1,19 @@
 #!/bin/bash
 
+escape_line() {
+  line=${*//\//\\\/}
+  line=${line//\*/\\\*}
+  line=${line//\#/\\\#}
+  line=${line//\"/\\\"}
+  echo $line
+}
+
 cat $1 | while read line; do
   filename=${line%%:*}
   linenum=${line#*:}
   linenum=${linenum%%:*}
   line=${line##*:}
+  line=$(escape_line $line)
 
   sed -e "${linenum}s/.*/$line/" -i .replace-backup "$filename"
 done
