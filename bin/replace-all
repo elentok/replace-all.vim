@@ -16,6 +16,7 @@ cat $1 | while read line; do
   line=$(escape_line $line)
 
   sed -e "${linenum}s/.*/$line/" -i .replace-backup "$filename"
+  rm "${filename}.replace-backup"
 done
 
 
