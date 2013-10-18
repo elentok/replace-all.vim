@@ -13,6 +13,7 @@ endfunc
 command! -nargs=+ FindAll call FindAll("<args>")
 
 func! ReplaceAll(args)
+  write
   silent exec "!" . g:find_all_plugin_root . "/bin/replace-all " . a:args
   redraw!
 endfunc
