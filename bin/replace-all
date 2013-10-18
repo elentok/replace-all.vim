@@ -8,7 +8,12 @@ escape_line() {
   echo $line
 }
 
-cat $1 | while read line; do
+filename="$1"
+if [ "$filename" == "" ]; then
+  filename="/tmp/results.replace-all"
+fi
+
+cat "$filename" | while read line; do
   filename=${line%%:*}
   linenum=${line#*:}
   linenum=${linenum%%:*}
