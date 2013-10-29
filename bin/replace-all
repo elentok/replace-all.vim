@@ -1,5 +1,11 @@
 #!/bin/bash
 
+
+export GRAY="\033[1;30m"
+export GREEN="\033[32m"
+export BLUE="\033[34m"
+export RESET="\033[0m"
+
 escape_line() {
   line=${*//\//\\\/}
   line=${line//\*/\\\*}
@@ -21,12 +27,13 @@ cat "$filename" | while read line; do
   line=${line#*:*:}
   escaped_line=$(escape_line "$line")
 
-  actual_line=$(sed "${linenum}q;d" "$filename")
-  if [ "$actual_line" == "$line" ]; then
-    echo "Skipping $filename:$linenum (identical)"
+  old_line=$(sed "${linenum}q;d" "$filename")
+  if [ "$old_line" == "$line" ]; then
+    echo -e "${GRAY}Skipping $filename:$linenum (identical)${RESET}"
   else
-    echo "Changing $filename:$linenum"
-    echo "  $line"
+    echo -e "${GREEN}Changing $filename:$linenum${RESET}"
+    echo -e "  » $old_line${RESET}"
+    echo -e "  ${BLUE}» $line${RESET}"
     sed -e "${linenum}s/.*/$escaped_line/" -i .replace-backup "$filename"
     rm "${filename}.replace-backup"
   fi
