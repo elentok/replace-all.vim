@@ -18,10 +18,18 @@ cat "$filename" | while read line; do
   linenum=${line#*:}
   linenum=${linenum%%:*}
   line=${line#*:*:}
-  line=$(escape_line "$line")
+  escaped_line=$(escape_line "$line")
 
-  sed -e "${linenum}s/.*/$line/" -i .replace-backup "$filename"
-  rm "${filename}.replace-backup"
+  actual_line=$(sed "${linenum}q;d" "$filename")
+  if [ "$actual_line" == "$line" ]; then
+    echo "Skipping $filename:$linenum (identical)"
+  else
+    echo "Changing $filename:$linenum"
+    echo "  $line"
+    sed -e "${linenum}s/.*/$escaped_line/" -i .replace-backup "$filename"
+    rm "${filename}.replace-backup"
+  fi
+
 done
 
 
