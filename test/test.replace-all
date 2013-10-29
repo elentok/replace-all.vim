@@ -1,3 +1,5 @@
+file1.txt:1:I am jim1
 file1.txt:3:I am sheldon1
 file2.txt:3:I am /*#sheldon"2
+file2.txt:4:I am &sheldon
 subdir1/file3.txt:4:I am sheldon3

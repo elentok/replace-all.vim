@@ -5,6 +5,7 @@ escape_line() {
   line=${line//\*/\\\*}
   line=${line//\#/\\\#}
   line=${line//\"/\\\"}
+  line=${line//\&/\\\&}
   echo "$line"
 }
 
