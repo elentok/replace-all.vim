@@ -20,7 +20,7 @@ if [ "$filename" == "" ]; then
   filename="/tmp/results.replace-all"
 fi
 
-cat "$filename" | while read line; do
+cat "$filename" | while IFS='' read -r line; do
   filename=${line%%:*}
   linenum=${line#*:}
   linenum=${linenum%%:*}
@@ -32,8 +32,8 @@ cat "$filename" | while read line; do
     echo -e "${GRAY}Skipping $filename:$linenum (identical)${RESET}"
   else
     echo -e "${GREEN}Changing $filename:$linenum${RESET}"
-    echo -e "  » $old_line${RESET}"
-    echo -e "  ${BLUE}» $line${RESET}"
+    echo -e "  » [$old_line]${RESET}"
+    echo -e "  ${BLUE}» [$line]${RESET}"
     sed -e "${linenum}s/.*/$escaped_line/" -i .replace-backup "$filename"
     rm "${filename}.replace-backup"
   fi
