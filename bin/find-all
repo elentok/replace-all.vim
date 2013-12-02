@@ -1,3 +1,3 @@
 #!/bin/bash
 
-ag --nogroup --nocolor $* > /tmp/results.replace-all
+ag --nogroup --nocolor "$@" > /tmp/results.replace-all

@@ -6,6 +6,8 @@ func! FindAll(args)
   redraw!
 
   let query = substitute(a:args, " *-G.*$", "", "")
+  let query = substitute(query, "^'", "", "")
+  let query = substitute(query, "'$", "", "")
   let @/ = query
   normal ggn
 endfunc
