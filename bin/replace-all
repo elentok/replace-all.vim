@@ -36,7 +36,7 @@ cat "$filename" | while IFS='' read -r line; do
     echo -e "  » [$old_line]${RESET}"
     echo -e "  ${BLUE}» [$line]${RESET}"
     sed -e "${linenum}s/.*/$escaped_line/" -i .replace-backup "$filename"
-    rm "${filename}.replace-backup"
+    rm -f "${filename}.replace-backup"
   fi
 
 done
