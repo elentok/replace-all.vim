@@ -22,7 +22,12 @@ endfunc
 
 func! ReplaceAll(args)
   write
-  exec "!" . g:find_all_plugin_root . "/bin/replace-all " . a:args
+  let cmd="!"
+  if has("nvim")
+    let cmd="term"
+  endif
+
+  exec cmd . g:find_all_plugin_root . "/bin/replace-all " . a:args
 endfunc
 
 func! ReplaceAll_EscapeForQuery(text)
